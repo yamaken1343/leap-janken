@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>じゃんけんゲーム</title>
+    <script src="leap-0.6.4.min.js"></script>
+    <script>
+        let fingerNum = 0;
+        let latestFingerNum = 0;
+        let controllerOptions = {};
+
+        Leap.loop(controllerOptions, function(frame) {
+            // Display Pointable (finger and tool) object data
+            let changeImg = document.getElementById("hand");
+            if (frame.pointables.length > 0) {
+                fingerNum = 0;
+                for (let i = 0; i < frame.pointables.length; i++) {
+                    let pointable = frame.pointables[i];
+                    if (pointable.extended) {
+                        fingerNum += 1;
+                    }
+                }
+            }
+            else {
+                fingerNum = -1
+            }
+            if (fingerNum !== latestFingerNum) {
+                var random = Math.round(Math.random() * 2);
+                console.log(random);
+                if (random === 0) {
+                    changeImg.src = "./img/g.png";
+                    if (fingerNum === 5) {
+                        document.getElementById('syohai').textContent = 'あなたの勝ち'
+                    } else if (fingerNum === 2) {
+                        document.getElementById('syohai').textContent = 'あなたの負け'
+                    } else if (fingerNum === 0) {
+                        document.getElementById('syohai').textContent = 'あいこ'
+                    } else {
+                        changeImg.src = "img/thinking_face.jpg";
+                        document.getElementById('syohai').textContent = 'うまく読み取れません'
+                    }
+                } else if (random === 1) {
+                    changeImg.src = "./img/c.png";
+                    if (fingerNum === 5) {
+                        document.getElementById('syohai').textContent = 'あなたの負け'
+                    } else if (fingerNum === 2) {
+                        document.getElementById('syohai').textContent = 'あいこ'
+                    } else if (fingerNum === 0) {
+                        document.getElementById('syohai').textContent = 'あなたの勝ち'
+                    } else {
+                        changeImg.src = "img/thinking_face.jpg";
+                        document.getElementById('syohai').textContent = 'うまく読み取れません'
+                    }
+
+                } else if (random === 2) {
+                    changeImg.src = "./img/p.png";
+                    if (fingerNum === 5) {
+                        document.getElementById('syohai').textContent = 'あいこ'
+                    } else if (fingerNum === 2) {
+                        document.getElementById('syohai').textContent = 'あなたの勝ち'
+                    } else if (fingerNum === 0) {
+                        document.getElementById('syohai').textContent = 'あなたの負け'
+                    } else {
+                        changeImg.src = "img/thinking_face.jpg";
+                        document.getElementById('syohai').textContent = 'うまく読み取れません'
+                    }
+                }
+            }
+            latestFingerNum = fingerNum;
+            console.log(fingerNum);
+        });
+    </script>
+</head>
+<body>
+<h1>じゃんけんゲーム</h1>
+<img id="hand" width="399" height="399" src="img/thinking_face.jpg">
+<span id="syohai"></span>
+
+</body>
+</html>

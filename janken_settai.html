@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>じゃんけんゲーム</title>
+    <script src="leap-0.6.4.min.js"></script>
+    <script>
+        let fingerNum = 0;
+        let controllerOptions = {};
+
+        Leap.loop(controllerOptions, function(frame) {
+            // Display Pointable (finger and tool) object data
+            let changeImg = document.getElementById("hand");
+            if (frame.pointables.length > 0) {
+                fingerNum = 0;
+                for (let i = 0; i < frame.pointables.length; i++) {
+                    let pointable = frame.pointables[i];
+                    if (pointable.extended) {
+                        fingerNum += 1;
+                    }
+                }
+            }
+            else {
+                fingerNum = -1
+            }
+            console.log(fingerNum);
+            if (fingerNum === 5){
+                changeImg.src = "./img/g.png";
+                document.getElementById('syohai').textContent = 'あなたの勝ち'
+            } else if (fingerNum === 2){
+                changeImg.src = "./img/p.png";
+                document.getElementById('syohai').textContent = 'あなたの勝ち'
+            } else if (fingerNum === 0){
+                changeImg.src = "./img/c.png";
+                document.getElementById('syohai').textContent = 'あなたの勝ち'
+            }
+            else {
+                changeImg.src = "img/thinking_face.jpg";
+                document.getElementById('syohai').textContent = 'うまく読み取れません'
+            }
+        });
+    </script>
+</head>
+<body>
+<h1>じゃんけんゲーム</h1>
+<img id="hand" width="399" height="399" src="img/thinking_face.jpg">
+<span id="syohai"></span>
+
+</body>
+</html>
